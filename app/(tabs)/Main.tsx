@@ -4,56 +4,75 @@ import { Banner } from "@/components/Banner";
 import { CardButton } from "@/components/CardButton";
 import { NewsSection } from "@/components/NewsSection";
 import { FontAwesome } from "@expo/vector-icons";
+import { Image } from "expo-image";
+import {HorizontalLine} from "@/components/HorizontalLine";
 
 export default function MainScreen() {
   return (
     <View style={styles.container}>
-      <Banner />
-
+      <Banner imageUrl={ require('../../assets/images/backgrounds/main_card1.png') } />
       <View style={styles.cardRow}>
         <CardButton
           title="Справочник"
-          backgroundColor="#A8DADC"
-          icon={<FontAwesome name="book" size={24} color="white" />}
-          onPress={() => {}}
+          backgroundColor="rgba(18, 146, 144, 0.5)"
+          icon={<Image source={  require("../../assets/images/icons/guide_icon.png") } style={[styles.cardImage, styles.mainCardImage]} contentFit={"contain"}/>}
+          onPress={() => {
+              window.location.href = "./Help"
+          }}
+          isMainCard={true}
         />
         <CardButton
           title="Чат с Гидом"
-          backgroundColor="#FFE66D"
-          icon={<FontAwesome name="comments" size={24} color="white" />}
-          onPress={() => {}}
+          backgroundColor="rgba(248, 215, 101, 0.5)"
+          icon={<Image source={ require("../../assets/images/icons/chat_icon.png") } style={[styles.cardImage, styles.mainCardImage]} contentFit={"contain"}/>}
+          onPress={() => {
+              window.location.href = "./pages/Chat"
+          }}
+          isMainCard={true}
         />
       </View>
       <View style={styles.cardRow}>
         <CardButton
           title="Шаблоны заявлений"
-          backgroundColor="#B4A0FA"
-          icon={<FontAwesome name="file" size={24} color="white" />}
-          onPress={() => {}}
+          backgroundColor="rgba(66, 156, 255, 0.5)"
+          icon={<Image source={require("../../assets/images/icons/sheet_icon.png")} style={[styles.cardImage, styles.simpleCardImage]} contentFit={"contain"}/>}
+          onPress={() => {
+              console.log("Шаблоны заявлений")
+          }}
+          isMainCard={false}
         />
         <CardButton
           title="Подать жалобу"
-          backgroundColor="#E63946"
-          icon={
-            <FontAwesome name="exclamation-triangle" size={24} color="white" />
-          }
-          onPress={() => {}}
+          backgroundColor="rgba(255, 122, 130, 0.5)"
+          icon={<Image source={require("../../assets/images/icons/warning_icon.png")} style={[styles.cardImage, styles.simpleCardImage]} contentFit={"contain"}/>}
+          onPress={() => {
+              console.log("Подать жалобу")
+          }}
+          isMainCard={false}
         />
       </View>
-      <View style={styles.cardRow}>
+      <View style={[styles.cardRow, { marginBottom: 40 }]}>
         <CardButton
           title="Контакты"
-          backgroundColor="#9C91E9"
-          icon={<FontAwesome name="phone" size={24} color="white" />}
-          onPress={() => {}}
+          backgroundColor="rgba(141, 94, 249, 0.25)"
+          icon={<Image source={require("../../assets/images/icons/contact_icon.png")} style={[styles.cardImage, styles.simpleCardImage]} contentFit={"contain"}/>}
+          onPress={() => {
+              console.log("Контакты")
+          }}
+          isMainCard={false}
         />
         <CardButton
           title="Отделения на карте"
-          backgroundColor="#A8DF65"
-          icon={<FontAwesome name="map-marker" size={24} color="white" />}
-          onPress={() => {}}
+          backgroundColor="rgba(115, 205, 128, 0.5)"
+          icon={<Image source={require("../../assets/images/icons/building_icon.png")} style={[styles.cardImage, styles.simpleCardImage]} contentFit={"contain"}/>}
+          onPress={() => {
+              console.log("Отделения на карте")
+          }}
+          isMainCard={false}
         />
       </View>
+
+      <HorizontalLine></HorizontalLine>
 
       <NewsSection />
     </View>
@@ -71,4 +90,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 10,
   },
+    cardImage: {
+        position: "relative",
+        objectFit: "contain",
+    },
+    mainCardImage: {
+      position: "relative",
+        width: 100,
+        height: 90,
+    },
+    simpleCardImage: {
+      width: 35,
+      height: 35,
+        objectFit: "contain",
+    },
+
 });

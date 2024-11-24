@@ -1,6 +1,7 @@
 // components/NewsSection.tsx
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import GLOBAL_CUSTOM from "@/constants/global_custom";
 
 export function NewsSection() {
   return (
@@ -15,16 +16,17 @@ export function NewsSection() {
 
 const styles = StyleSheet.create({
   newsSection: {
-    marginTop: 20,
+    marginTop: 40,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
+    fontFamily: GLOBAL_CUSTOM["fw-bold"].fontFamily,
   },
   newsPlaceholder: {
     height: 100,
     backgroundColor: "#e0e0e0",
-    borderRadius: 10,
+    borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
