@@ -1,12 +1,15 @@
 // components/CardButton.tsx
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Image } from 'expo-image';
+import GLOBAL_CUSTOM from "@/constants/global_custom";
 
 interface CardButtonProps {
   title: string;
   backgroundColor: string;
   icon: React.ReactNode;
   onPress: () => void;
+  isMainCard: boolean;
 }
 
 export function CardButton({
@@ -14,35 +17,55 @@ export function CardButton({
   backgroundColor,
   icon,
   onPress,
+    isMainCard,
 }: CardButtonProps) {
-  return (
-    <TouchableOpacity
-      style={[styles.card, { backgroundColor }]}
-      onPress={onPress}
-    >
-      <View style={styles.iconContainer}>{icon}</View>
-      <Text style={styles.title}>{title}</Text>
-    </TouchableOpacity>
-  );
+  if (isMainCard) {
+    return (
+        <TouchableOpacity
+            style={[styles.card, { backgroundColor }, styles.mainCard]}
+            onPress={onPress}
+        >
+          <Text style={[styles.title, { alignSelf: "flex-start" }]}>{title}</Text>
+          <View style={[styles.iconContainer, { alignSelf: "flex-end" }]}>{icon}</View>
+        </TouchableOpacity>
+    );
+  } else {
+    return (
+        <TouchableOpacity
+            style={[styles.card, { backgroundColor }, styles.simpleCard]}
+            onPress={onPress}
+        >
+          <Text style={styles.title}>{title}</Text>
+          <View style={styles.iconContainer}>{icon}</View>
+        </TouchableOpacity>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   card: {
+    display: "flex",
+    alignItems: "center",
     flex: 1,
-    height: 100,
-    borderRadius: 10,
+    borderRadius: 16,
     padding: 10,
     margin: 5,
-    alignItems: "center",
-    justifyContent: "center",
   },
   iconContainer: {
-    marginBottom: 10,
   },
   title: {
-    color: "white",
-    fontSize: 14,
+    color: "#000",
+    fontSize: 16,
     fontWeight: "bold",
-    textAlign: "center",
+    fontFamily: GLOBAL_CUSTOM["fw-bold"].fontFamily
   },
+  mainCard: {
+    height: 130,
+    width: "50%",
+  },
+  simpleCard: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    height: 60
+  }
 });
