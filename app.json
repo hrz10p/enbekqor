@@ -17,10 +17,16 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "newArchEnabled": true
+      "newArchEnabled": true,
+      "package": "com.xkrcl.enbekqor",
+
     },
     "ios": {
-      "newArchEnabled": true
+      "newArchEnabled": true,
+      "bundleIdentifier": "com.xkrcl.enbekqor",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "web": {
       "bundler": "metro",
@@ -32,12 +38,31 @@
       [
         "expo-font",
         {
-          "fonts": ["node_modules/@expo-google-fonts/roboto/Roboto_400Regular.ttf", "node_modules/@expo-google-fonts/roboto/Roboto_700Bold.ttf", "node_modules/@expo-google-fonts/roboto/Roboto_900Black.ttf"]
+          "fonts": [
+            "node_modules/@expo-google-fonts/roboto/Roboto_400Regular.ttf",
+            "node_modules/@expo-google-fonts/roboto/Roboto_700Bold.ttf",
+            "node_modules/@expo-google-fonts/roboto/Roboto_900Black.ttf"
+          ]
+        }
+      ],
+      "expo-web-browser",
+      [
+        "react-native-maps",
+        {
+          "type": "openstreet"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "4fc3b0b1-b199-4ce5-802e-bfcbf0d75bb8"
+      }
     }
   }
 }

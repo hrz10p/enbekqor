@@ -1,0 +1,33 @@
+{
+  "translation": {
+    "main_page_title": "Главная",
+    "search_page_title": "Искать",
+    "help_page_title": "Помощь",
+    "profile_page_title": "Профиль",
+    "chat_page_title": "Чат с гидом",
+    "handbook": "Справочник",
+    "application_templates": "Шаблоны заявлений",
+    "apply_complaint": "Подать жалобу",
+    "contacts": "Контакты",
+    "branches_map": "Отделения на карте",
+    "banner_title_1": "Возникли трудовые споры?",
+    "banner_subtitle_1": "Найдите решение ваших трудовых проблем.",
+    "banner_title_2": "Как защитить свои права?",
+    "banner_subtitle_2": "Получите консультацию юриста.",
+    "banner_title_3": "Что делать, если не выплачивают зарплату?",
+    "banner_subtitle_3": "Разберитесь с задержкой выплат.",
+    "banner_title_4": "Проблемы с увольнением?",
+    "banner_subtitle_4": "Наши юристы помогут вам разобраться.",
+    "banner_title_5": "Задержка с выходным пособием?",
+    "banner_subtitle_5": "Мы поможем вам получить компенсацию.",
+    "news": "Новости",
+    "russian": "Русский",
+    "kazakh": "Казахский",
+    "register": "Регистрация",
+    "full_name": "ФИО",
+    "phone": "Телефон",
+    "password": "Пароль",
+    "confirm_password": "Подтверждение пароля",
+    "close": "Закрыть"
+  }
+}

@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import { Image } from "expo-image";
 import { LinearGradient } from 'expo-linear-gradient';
+import i18n from "@/utilities/internationalization";
+import {useTranslation} from "react-i18next";
 
 // Define the prop types
 interface BannerProps {
@@ -9,6 +11,7 @@ interface BannerProps {
 }
 
 export function Banner({ imageUrl }: BannerProps) {
+  const { t } = useTranslation();
 
   const [currentIndex, setCurrentIndex] = useState(0); // To track which button is selected
   const [titleText, setTitleText] = useState("Возникли трудовые споры?"); // Initial title text
@@ -17,24 +20,24 @@ export function Banner({ imageUrl }: BannerProps) {
   // Array to store the title and subtitle texts for each index
   const bannerContent = [
     {
-      title: "Возникли трудовые споры?",
-      subtitle: "Найдите решение ваших трудовых проблем.",
+      title: t("banner_title_1"),
+      subtitle: t("banner_subtitle_1"),
     },
     {
-      title: "Как защитить свои права?",
-      subtitle: "Получите консультацию юриста.",
+      title: t("banner_title_2"),
+      subtitle: t("banner_subtitle_2"),
     },
     {
-      title: "Что делать, если не выплачивают зарплату?",
-      subtitle: "Разберитесь с задержкой выплат.",
+      title: t("banner_title_3"),
+      subtitle: t("banner_subtitle_3"),
     },
     {
-      title: "Проблемы с увольнением?",
-      subtitle: "Наши юристы помогут вам разобраться.",
+      title: t("banner_title_4"),
+      subtitle: t("banner_subtitle_4"),
     },
     {
-      title: "Задержка с выходным пособием?",
-      subtitle: "Мы поможем вам получить компенсацию.",
+      title: t("banner_title_5"),
+      subtitle: t("banner_subtitle_5"),
     },
   ];
 

@@ -1,11 +1,14 @@
-import {Stack, Tabs} from "expo-router";
-import { FontAwesome } from "@expo/vector-icons";
+import { Stack } from "expo-router";
+import { NavigationContainer } from '@react-navigation/native';
+import { LanguageProvider } from '@/src/context/language-context';
 
 export default function RootLayout() {
-  return (
-      <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-      </Stack>
-  );
+    return (
+        <LanguageProvider>
+                <Stack>
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen name="+not-found" />
+                </Stack>
+        </LanguageProvider>
+    );
 }

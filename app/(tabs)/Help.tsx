@@ -1,72 +1,105 @@
-import React, {useState} from "react";
-import {View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList} from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import SearchBar from "@/components/SearchBar";
-import {HorizontalLine} from "@/components/HorizontalLine";
-import GLOBAL_CUSTOM from "@/constants/global_custom";
-import {Link} from "expo-router";
-import {Feather} from "@expo/vector-icons";
+import { HorizontalLine } from "@/components/HorizontalLine";
+import { Link } from "expo-router";
+import { Feather } from "@expo/vector-icons";
+import LoadingSpinner from "@/components/LoadinSpinner";
+import {useLanguage} from "@/src/context/language-context";
 
 export default function HelpScreen() {
-
-  const categories = [
-    {
-      "title": "Обязанности работодателя",
-      "questions": [
-        {
-          "question": "Какие обязанности у работодателя по обеспечению безопасных условий труда?",
-          "text": "В соответствии с законодательством Казахстана предусмотрены следующие виды отпусков: Ежегодный оплачиваемый отпуск, который включает основной отпуск с минимальной продолжительностью 24 календарных дня и дополнительный отпуск за работу во вредных или опасных условиях труда, за ненормированный рабочий день или за продолжительную работу на одном месте. Социальные отпуска, включая отпуск по беременности и родам, который предоставляется женщинам на срок не менее 126 календарных дней (70 дней до родов и 56 дней после), а также отпуск по уходу за ребенком до достижения ребенком трехлетнего возраста с возможностью частичного сохранения заработной платы в первые годы."
-        },
-        {
-          "question": "Какие обязанности у работодателя по обеспечению безопасных условий труда?",
-          "text": "В соответствии с законодательством Казахстана предусмотрены следующие виды отпусков: Ежегодный оплачиваемый отпуск, который включает основной отпуск с минимальной продолжительностью 24 календарных дня и дополнительный отпуск за работу во вредных или опасных условиях труда, за ненормированный рабочий день или за продолжительную работу на одном месте. Социальные отпуска, включая отпуск по беременности и родам, который предоставляется женщинам на срок не менее 126 календарных дней (70 дней до родов и 56 дней после), а также отпуск по уходу за ребенком до достижения ребенком трехлетнего возраста с возможностью частичного сохранения заработной платы в первые годы."
-        },
-        {
-          "question": "Какие обязанности у работодателя по обеспечению безопасных условий труда?",
-          "text": "В соответствии с законодательством Казахстана предусмотрены следующие виды отпусков: Ежегодный оплачиваемый отпуск, который включает основной отпуск с минимальной продолжительностью 24 календарных дня и дополнительный отпуск за работу во вредных или опасных условиях труда, за ненормированный рабочий день или за продолжительную работу на одном месте. Социальные отпуска, включая отпуск по беременности и родам, который предоставляется женщинам на срок не менее 126 календарных дней (70 дней до родов и 56 дней после), а также отпуск по уходу за ребенком до достижения ребенком трехлетнего возраста с возможностью частичного сохранения заработной платы в первые годы."
-        },
-        {
-          "question": "Какие обязанности у работодателя по обеспечению безопасных условий труда?",
-          "text": "В соответствии с законодательством Казахстана предусмотрены следующие виды отпусков: Ежегодный оплачиваемый отпуск, который включает основной отпуск с минимальной продолжительностью 24 календарных дня и дополнительный отпуск за работу во вредных или опасных условиях труда, за ненормированный рабочий день или за продолжительную работу на одном месте. Социальные отпуска, включая отпуск по беременности и родам, который предоставляется женщинам на срок не менее 126 календарных дней (70 дней до родов и 56 дней после), а также отпуск по уходу за ребенком до достижения ребенком трехлетнего возраста с возможностью частичного сохранения заработной платы в первые годы."
-        },
-      ]
-    },
-    {
-      "title": "Рабочее время и отдых",
-      "questions": [
-        {
-          "question": "Тут будут вопросы",
-          "text": "Тут будут ответы"
-        }
-      ]
-    }
-  ];
-
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const { language } = useLanguage();
+  const [categories, setCategories] = useState([{id:-1, title: ""}]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState({ id: -1, questions: [] });
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://api.enbekqor.kz/v1/categories");
+        const json = await response.json();
+        const categories = json.map((category: any) => {
+          return {
+            id: category.id,
+            title: language === 'ru' ? category.title_ru : category.title_kz,
+            questions: category.questions.map((question: any) => {
+              return {
+                id: question.id,
+                category_id: question.category_id,
+                question: language === 'ru' ? question.question_ru : question.question_kz,
+                text: language === 'ru' ? question.text_ru : question.text_kz,
+              }
+            }),
+          }
+        });
+        setCategories(categories);
+        setSelectedCategory(categories[0]);
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleCategoryPress = (category: any) => {
     setSelectedCategory(category);
+    setExpandedIndex(null);
   };
+
+  const handleQuestionSelect = (question: any) => {
+    let questionIndex = selectedCategory?.questions?.findIndex(
+        (q: any) => q.id === question.id
+    );
+    if (questionIndex == -1) {
+      if (question.category_id) {
+        const selectedCategory : any = categories.find(category => category.id == question.category_id);
+        setSelectedCategory(selectedCategory);
+        questionIndex = selectedCategory?.questions?.findIndex(
+            (q: any) => q.id === question.id
+        );
+      }
+    }
+    setExpandedIndex(questionIndex !== -1 ? questionIndex : null);
+  };
+
   const toggleExpand = (index: number) => {
     setExpandedIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
-  const renderQuestion = ({ item, index }: any) => (
-      <View style={styles.questionContainer}>
+  const renderQuestion = ({ item, index }: { item: any; index: number }) => (
+      <View
+          style={[
+            styles.questionContainer,
+          ]}
+      >
         <TouchableOpacity
             style={styles.questionHeader}
             onPress={() => toggleExpand(index)}
         >
           <Text style={styles.question}>{item.question}</Text>
           <Text style={styles.plusIcon}>
-            {expandedIndex === index ? "-" : "+"}
+            {index === expandedIndex ? "-" : "+"}
           </Text>
         </TouchableOpacity>
-        {expandedIndex === index && (
+        {index === expandedIndex && (
             <View style={styles.expandedBlock}>
               <Text style={styles.answerText}>{item.text}</Text>
               <Link href={"./pages/Chat"} style={styles.redirectLink}>
-                <Feather name="user" color={"rgba(89, 155, 255, 1)"} size={15} style={{fontWeight: "900"}} />
+                <Feather
+                    name="user"
+                    color={"rgba(89, 155, 255, 1)"}
+                    size={15}
+                    style={{ fontWeight: "900" }}
+                />
                 Чат с гидом
               </Link>
             </View>
@@ -74,10 +107,12 @@ export default function HelpScreen() {
       </View>
   );
 
+  if (loading) return <LoadingSpinner />;
+
   return (
       <View style={styles.container}>
         <View style={styles.searchBar}>
-          <SearchBar />
+          <SearchBar onQuestionSelect={handleQuestionSelect} />
         </View>
         <HorizontalLine />
         <View style={styles.categories}>
@@ -89,14 +124,14 @@ export default function HelpScreen() {
                   key={index}
                   style={[
                     styles.category,
-                    selectedCategory.title === category.title && styles.selectedCategory,
+                    selectedCategory?.id === category.id && styles.selectedCategory,
                   ]}
                   onPress={() => handleCategoryPress(category)}
               >
                 <Text
                     style={[
                       styles.categoryText,
-                      selectedCategory.title === category.title && styles.selectedCategoryText,
+                      selectedCategory?.id === category.id && styles.selectedCategoryText,
                     ]}
                 >
                   {category.title}
@@ -105,14 +140,17 @@ export default function HelpScreen() {
           ))}
         </View>
         <FlatList
-            data={selectedCategory.questions}
-            renderItem={(itemProps) => renderQuestion(itemProps)}
-            keyExtractor={(item, index) => index.toString()}
+            data={selectedCategory?.questions}
+            renderItem={renderQuestion}
+            keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={styles.questionsContainer}
+            style={{ width: "100%" }}
         />
         <View style={styles.goToChatBlock}>
           <Text style={styles.goToChatBlockText}>Не смогли найти вопрос?</Text>
-          <Link href={"./pages/Chat"} style={styles.goToChatBlockLink}>Чат с гидом</Link>
+          <Link href={"./pages/Chat"} style={styles.goToChatBlockLink}>
+            Чат с гидом
+          </Link>
         </View>
       </View>
   );
@@ -123,34 +161,26 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 20,
-    display: "flex",
+    paddingTop: 35,
     flexDirection: "column",
+    width: "100%",
   },
   searchBar: {
     width: "100%",
-    paddingHorizontal: 15,
     marginVertical: 15,
+    zIndex: 2,
   },
   categories: {
     width: "100%",
-    display: "flex",
-    flexDirection: "column",
     marginTop: 20,
   },
   categories_heading: {
-    width: "100%",
-    alignItems: "flex-start",
-    textAlign: "left",
     fontSize: 20,
-    fontFamily: GLOBAL_CUSTOM["fw-bold"].fontFamily,
     fontWeight: "bold",
     marginBottom: 20,
   },
   categories_picker: {
-    width: "100%",
-    overflow: "scroll",
-    display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   category: {
     backgroundColor: "rgba(89, 155, 255, 0.5)",
@@ -158,7 +188,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 20,
     marginRight: 10,
-    width: 150,
   },
   selectedCategory: {
     backgroundColor: "rgba(89, 155, 255, 1)",
@@ -171,40 +200,30 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   questionsContainer: {
-    display: "flex",
-    flexDirection: "column",
     padding: 10,
+    width: "100%",
   },
   questionContainer: {
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
     paddingVertical: 15,
   },
   question: {
     fontSize: 16,
-    color: "#333",
-    flex: 1,
     fontWeight: "bold",
   },
   plusIcon: {
     fontSize: 20,
-    color: "#568CF9",
     fontWeight: "bold",
   },
   questionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 15,
   },
   answerText: {
     fontSize: 14,
-    color: "#555",
     marginTop: 10,
-    lineHeight: 20,
   },
   expandedBlock: {
     marginTop: 10,
@@ -214,42 +233,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
   },
-  button: {
-    marginTop: 10,
-    backgroundColor: "#4CAF50",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   redirectLink: {
     color: "rgba(89, 155, 255, 1)",
     textDecorationLine: "underline",
   },
   goToChatBlock: {
-    display: "flex",
-    flexDirection: "column",
     alignItems: "center",
     width: "100%",
   },
   goToChatBlockText: {
     fontSize: 20,
     fontWeight: "bold",
-    fontFamily: GLOBAL_CUSTOM["fw-bold"].fontFamily,
     marginVertical: 15,
   },
   goToChatBlockLink: {
-    width: "100%",
     borderRadius: 36,
     backgroundColor: "rgba(89, 155, 255, 1)",
     color: "#fff",
     fontWeight: "bold",
-    fontFamily: GLOBAL_CUSTOM["fw-bold"].fontFamily,
     padding: 15,
     textAlign: "center",
     fontSize: 20,

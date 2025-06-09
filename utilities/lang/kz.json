@@ -1,0 +1,28 @@
+{
+  "translation": {
+    "main_page_title": "Басты бет",
+    "search_page_title": "Іздеу",
+    "help_page_title": "Көмек",
+    "profile_page_title": "Профиль",
+    "chat_page_title": "Гидпен сөйлесу",
+    "handbook": "Справочник",
+    "application_templates": "Қолданба үлгілері",
+    "apply_complaint": "Шағым беру",
+    "contacts": "Контактілер",
+    "branches_map": "Картадағы тармақтар",
+    "banner_title_1": "Еңбек даулары туындады ма?",
+    "banner_subtitle_1": "Еңбек мәселелеріңізді шешудің жолын табыңыз.",
+    "banner_title_2": "Құқықтарыңызды қалай қорғауға болады?",
+    "banner_subtitle_2": "Заңгерден кеңес алыңыз.",
+    "banner_title_3": "Жалақы төленбесе не істеу керек?",
+    "banner_subtitle_3": "Төлем кешігу мәселесін шешіңіз.",
+    "banner_title_4": "Жұмыстан шығу мәселелері бар ма?",
+    "banner_subtitle_4": "Біздің заңгерлер сізге көмектеседі.",
+    "banner_title_5": "Жәрдемақы кешіктірілді ме?",
+    "banner_subtitle_5": "Өтемақы алуға көмектесеміз.",
+    "news": "Жаңалықтар",
+    "russian": "Орыс",
+    "kazakh": "Қазақ",
+    "register": "Регистрация"
+  }
+}

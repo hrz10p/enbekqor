@@ -1,12 +1,14 @@
-// components/NewsSection.tsx
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import GLOBAL_CUSTOM from "@/constants/global_custom";
+import i18n from "@/utilities/internationalization";
+import {useTranslation} from "react-i18next";
 
 export function NewsSection() {
+  const { t } = useTranslation();
   return (
     <View style={styles.newsSection}>
-      <Text style={styles.title}>Новости</Text>
+      <Text style={styles.title}>{t("news")}</Text>
       <View style={styles.newsPlaceholder}>
         <Text>Здесь будет отображаться список новостей.</Text>
       </View>
